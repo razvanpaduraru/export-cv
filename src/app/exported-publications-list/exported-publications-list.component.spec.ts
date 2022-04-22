@@ -5,7 +5,7 @@ import {ExportedPublicationsListComponent} from "./exported-publications-list.co
 import {HttpClient} from "@angular/common/http";
 import {ExportedPublicationsListService} from "../shared/service/exported-publications-list.service";
 
-describe('Component: exported-pubbilcations-list', () => {
+describe('Component: exported-publications-list', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 

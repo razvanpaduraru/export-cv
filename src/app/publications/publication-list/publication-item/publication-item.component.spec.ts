@@ -4,7 +4,7 @@ import {TestBed} from "@angular/core/testing";
 import {PublicationItemComponent} from "./publication-item.component";
 import {HttpClient} from "@angular/common/http";
 
-describe('Component: publications-component', () => {
+describe('Component: publications-item', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 

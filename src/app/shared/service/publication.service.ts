@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from "rxjs";
 import { UserInfo } from "../model/user-info.model";
 import { tap } from "rxjs/operators";
+import {LogService} from "./logger/logger.service";
 
 @Injectable({providedIn: 'root'})
 export class PublicationService  {
@@ -15,7 +16,8 @@ export class PublicationService  {
   private userInfo!: UserInfo;
 
   constructor(private exportedPublicationsListService: ExportedPublicationsListService,
-              private httpClient: HttpClient) {
+              private httpClient: HttpClient,
+              private logService: LogService) {
   }
 
   setPublications(publications: Publication[]) {
@@ -114,6 +116,7 @@ export class PublicationService  {
   }
 
   getYears(): string[] {
+    this.logService.log("Start getting the years for all publications");
     let years: string[] = [];
     this.publications.forEach(publication => {
       if (publication.publication_date != null) {
@@ -123,10 +126,12 @@ export class PublicationService  {
         }
       }
     });
+    this.logService.log("Finish getting the years for all publications");
     return years.sort();
   }
 
   countPublicationsByTypePerYear(type: string): number[] {
+    this.logService.log("Start counting publications by type per year");
     let allYears: number[] = [];
     const years = this.getYears();
 
@@ -143,11 +148,14 @@ export class PublicationService  {
       allYears.push(count);
     });
 
+    this.logService.log("Finish counting publications by type per year");
+
     return allYears;
   }
 
   countProductivityByTypePerYear(type: string): number[] {
     let finalAllYears: number[] = [];
+    this.logService.log("Start count productivity by type per year");
     let allPublicationsYears: number[] = this.countPublicationsByTypePerYear(type);
     let allExportedYears: number[] = this.exportedPublicationsListService.countPublicationsByTypePerYear(type, this.getYears());
 
@@ -160,11 +168,14 @@ export class PublicationService  {
       }
     }
 
+    this.logService.log("Finish count productivity by type per year");
+
     return finalAllYears;
   }
 
   getPublishers(): string[] {
     let publishers: string[] = [];
+    this.logService.log("Start getting publishers");
     this.publications.forEach(publication => {
       if (publication.publisher != null) {
         if (!publishers.includes(publication.publisher)) {
@@ -172,11 +183,13 @@ export class PublicationService  {
         }
       }
     });
+    this.logService.log("Finish getting publishers");
     return publishers;
   }
 
   countPublicationsByTypePerPublisher(type: string): number[] {
     let allPublishers: number[] = [];
+    this.logService.log("Start counting publications by type for each publisher");
     const publishers = this.getPublishers();
 
     publishers.forEach(publisher => {
@@ -192,11 +205,14 @@ export class PublicationService  {
       allPublishers.push(count);
     });
 
+    this.logService.log("Finish counting publications by type for each publisher");
+
     return allPublishers;
   }
 
   countDistinctPublishersPerType(type: string): number {
     let count: number = 0;
+    this.logService.log("Start counting distinct publishers by type");
     let allPublishers: number[] = this.countPublicationsByTypePerPublisher(type);
 
     allPublishers.forEach(publisher => {
@@ -204,6 +220,8 @@ export class PublicationService  {
         count += 1;
       }
     });
+
+    this.logService.log("Start counting distinct publishers by type");
 
     return count;
   }

@@ -22,6 +22,7 @@ import { LineChartComponent } from './statistics/line-chart/line-chart.component
 import { BarChartComponent } from './statistics/bar-chart/bar-chart.component';
 import { ProductivityLineChartComponent } from './statistics/productivity-line-chart/productivity-line-chart.component';
 import {RadarChartComponent} from "./statistics/radar-chart/radar-chart.component";
+import {LogService} from "./shared/service/logger/logger.service";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import {RadarChartComponent} from "./statistics/radar-chart/radar-chart.componen
     HttpClientModule,
     NgChartsModule
   ],
-  providers: [ExportedPublicationsListService, PublicationService],
+  providers: [ExportedPublicationsListService, PublicationService, LogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

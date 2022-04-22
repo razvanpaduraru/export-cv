@@ -3,6 +3,7 @@ import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { tap } from "rxjs/operators";
+import {LogService} from "./logger/logger.service";
 
 @Injectable({providedIn: 'root'})
 export class ExportedPublicationsListService {
@@ -10,7 +11,8 @@ export class ExportedPublicationsListService {
   startedEditing = new Subject<number>();
   private exportedPublications: ExportedPublication[] = [];
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient,
+              private logService: LogService) {}
 
   fetchExportedPublicationsFromServer() {
     return this.httpClient.get<ExportedPublication[]>('http://localhost:8080/exportCV/getExportedPublications')
@@ -56,6 +58,7 @@ export class ExportedPublicationsListService {
   }
 
   countPublicationsByTypePerYear(type: string, years: string[]): number[] {
+    this.logService.log("Start counting exported publications by type for each year");
     let allYears: number[] = [];
 
     years.forEach(year => {
@@ -70,6 +73,8 @@ export class ExportedPublicationsListService {
       });
       allYears.push(count);
     });
+
+    this.logService.log("Finish counting exported publications by type for each year");
 
     return allYears;
   }

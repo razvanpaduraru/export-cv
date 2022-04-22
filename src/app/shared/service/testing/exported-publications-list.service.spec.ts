@@ -9,7 +9,7 @@ import {HttpHeaders} from "@angular/common/http";
 import {UserInfo} from "../../model/user-info.model";
 import {ExportedPublicationsListService} from "../exported-publications-list.service";
 
-describe('PublicationService', () => {
+describe('ExportedPublicationsListService', () => {
   let service: ExportedPublicationsListService;
   let httpController: HttpTestingController;
 
