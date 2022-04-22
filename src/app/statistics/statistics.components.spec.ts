@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import {TestBed, async} from "@angular/core/testing";
-import {AppComponent} from "./app.component";
+import {StatisticsComponent} from "./statistics.component";
 import {HttpClient} from "@angular/common/http";
 
 describe('Component: app-component', () => {
@@ -11,7 +11,7 @@ describe('Component: app-component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      declarations: [AppComponent]
+      declarations: [StatisticsComponent]
     });
 
     httpClient = TestBed.get(HttpClient);
@@ -19,9 +19,8 @@ describe('Component: app-component', () => {
   })
 
   it('should create the app', () => {
-    let fixture = TestBed.createComponent(AppComponent);
+    let fixture = TestBed.createComponent(StatisticsComponent);
     let app = fixture.debugElement.componentInstance;
-    fixture.detectChanges();
     expect(app).toBeTruthy();
   });
 })

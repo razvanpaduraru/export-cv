@@ -49,4 +49,28 @@ export class ExportedPublicationsListService {
     this.exportedPublicationsChanged.next(this.exportedPublications);
     this.saveExportedPublications();
   }
+
+  countPublicationsByType(type: string): number {
+    const journals = this.exportedPublications.filter(publication => publication.publication_type === type);
+    return journals.length;
+  }
+
+  countPublicationsByTypePerYear(type: string, years: string[]): number[] {
+    let allYears: number[] = [];
+
+    years.forEach(year => {
+      let count: number = 0;
+      this.exportedPublications.forEach(publication => {
+        if (publication.publication_date != null &&
+          publication.publication_date.substring(0,4) === year &&
+          publication.publication_type === type)
+        {
+          count += 1;
+        }
+      });
+      allYears.push(count);
+    });
+
+    return allYears;
+  }
 }

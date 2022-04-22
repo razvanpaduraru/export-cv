@@ -23,7 +23,7 @@ export class PublicationDetailComponent implements OnInit {
   }
 
   onAddToExportedPublicationsList() {
-    this.publicationService.addExportedPublicationToList(new ExportedPublication(this.publication.id, this.publication.title, this.publication.abstract_text, this.publication.publication_type));
+    this.publicationService.addExportedPublicationToList(new ExportedPublication(this.publication.id, this.publication.title, this.publication.abstract_text, this.publication.publication_type, this.publication.publication_date));
   }
 
   onDeleteFromExportedPublicationsList() {

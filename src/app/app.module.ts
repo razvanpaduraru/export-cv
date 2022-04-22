@@ -17,6 +17,11 @@ import { PublicationsComponent } from './publications/publications.component';
 import { PublicationService } from './shared/service/publication.service';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { NgChartsModule } from 'ng2-charts';
+import { PieChartComponent } from './statistics/pie-chart/pie-chart.component';
+import { LineChartComponent } from './statistics/line-chart/line-chart.component';
+import { BarChartComponent } from './statistics/bar-chart/bar-chart.component';
+import { ProductivityLineChartComponent } from './statistics/productivity-line-chart/productivity-line-chart.component';
+import {RadarChartComponent} from "./statistics/radar-chart/radar-chart.component";
 
 @NgModule({
   declarations: [
@@ -29,7 +34,12 @@ import { NgChartsModule } from 'ng2-charts';
     PublicationStartComponent,
     ExportedPublicationsListComponent,
     PublicationsComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    PieChartComponent,
+    LineChartComponent,
+    BarChartComponent,
+    ProductivityLineChartComponent,
+    RadarChartComponent
   ],
   imports: [
     BrowserModule,

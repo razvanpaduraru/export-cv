@@ -107,4 +107,104 @@ export class PublicationService  {
     this.publications[index].isExported = true;
     this.publicationsChanged.next(this.publications);
   }
+
+  countPublicationsByType(type: string): number {
+    const journals = this.publications.filter(publication => publication.publication_type === type);
+    return journals.length;
+  }
+
+  getYears(): string[] {
+    let years: string[] = [];
+    this.publications.forEach(publication => {
+      if (publication.publication_date != null) {
+        const year = publication.publication_date.substring(0,4);
+        if (!years.includes(year)) {
+          years.push(year);
+        }
+      }
+    });
+    return years.sort();
+  }
+
+  countPublicationsByTypePerYear(type: string): number[] {
+    let allYears: number[] = [];
+    const years = this.getYears();
+
+    years.forEach(year => {
+      let count: number = 0;
+      this.publications.forEach(publication => {
+        if (publication.publication_date != null &&
+          publication.publication_date.substring(0,4) === year &&
+          publication.publication_type === type)
+        {
+          count += 1;
+        }
+      });
+      allYears.push(count);
+    });
+
+    return allYears;
+  }
+
+  countProductivityByTypePerYear(type: string): number[] {
+    let finalAllYears: number[] = [];
+    let allPublicationsYears: number[] = this.countPublicationsByTypePerYear(type);
+    let allExportedYears: number[] = this.exportedPublicationsListService.countPublicationsByTypePerYear(type, this.getYears());
+
+    for (var i = 0; i < allPublicationsYears.length; i++) {
+      if (allPublicationsYears[i] != 0) {
+        const percent =  (allExportedYears[i] / allPublicationsYears[i]) * 100;
+        finalAllYears.push(percent);
+      } else {
+        finalAllYears.push(0);
+      }
+    }
+
+    return finalAllYears;
+  }
+
+  getPublishers(): string[] {
+    let publishers: string[] = [];
+    this.publications.forEach(publication => {
+      if (publication.publisher != null) {
+        if (!publishers.includes(publication.publisher)) {
+          publishers.push(publication.publisher);
+        }
+      }
+    });
+    return publishers;
+  }
+
+  countPublicationsByTypePerPublisher(type: string): number[] {
+    let allPublishers: number[] = [];
+    const publishers = this.getPublishers();
+
+    publishers.forEach(publisher => {
+      let count: number = 0;
+      this.publications.forEach(publication => {
+        if (publication.publisher != null &&
+          publication.publisher === publisher &&
+          publication.publication_type === type)
+        {
+          count += 1;
+        }
+      });
+      allPublishers.push(count);
+    });
+
+    return allPublishers;
+  }
+
+  countDistinctPublishersPerType(type: string): number {
+    let count: number = 0;
+    let allPublishers: number[] = this.countPublicationsByTypePerPublisher(type);
+
+    allPublishers.forEach(publisher => {
+      if (publisher > 0) {
+        count += 1;
+      }
+    });
+
+    return count;
+  }
 }
