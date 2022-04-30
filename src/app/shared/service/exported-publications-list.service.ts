@@ -8,7 +8,6 @@ import {LogService} from "./logger/logger.service";
 @Injectable({providedIn: 'root'})
 export class ExportedPublicationsListService {
   exportedPublicationsChanged = new Subject<ExportedPublication[]>();
-  startedEditing = new Subject<number>();
   private exportedPublications: ExportedPublication[] = [];
 
   constructor(private httpClient: HttpClient,
